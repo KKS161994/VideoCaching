@@ -17,6 +17,12 @@
 
 package com.example.android.devbyteviewer.util
 
+import androidx.room.Database
+import com.example.android.devbyteviewer.database.DatabaseVideo
+import com.example.android.devbyteviewer.domain.Video
+import com.example.android.devbyteviewer.network.NetworkVideoContainer
+import kotlinx.android.synthetic.main.devbyte_item.view.*
+
 private val PUNCTUATION = listOf(", ", "; ", ": ", " ")
 
 /**
@@ -47,4 +53,32 @@ fun String.smartTruncate(length: Int): String {
         builder.append("...")
     }
     return builder.toString()
+}
+
+
+/***
+ * Convert database objects to domain objects
+ */
+fun List<DatabaseVideo>.asDomainModel():List<Video>{
+    return this.map{
+        Video(
+                url = it.url,
+                title = it.title ,
+                description = it.description,
+                updated = it.updated,
+                thumbnail = it.thumbnail
+
+        )
+    }
+}
+
+fun NetworkVideoContainer.asDatabaseModel():Array<DatabaseVideo>{
+    return videos.map {
+        DatabaseVideo (
+                title = it.title,
+                description = it.description,
+                url = it.url,
+                updated = it.updated,
+                thumbnail = it.thumbnail)
+    }.toTypedArray()
 }
