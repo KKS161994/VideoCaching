@@ -119,7 +119,7 @@ class DevByteFragment : Fragment() {
             startActivity(intent)
         })
 
-        binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
+        binding.recyclerViews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
